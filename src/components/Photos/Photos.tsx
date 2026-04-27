@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+import { Box } from "@mui/material";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+
 import axios from "axios";
 
 import type { PhotoTypes } from "./Photos.types";
+
+import { containerStyles, imageStyles } from "./Photos.styles";
 
 const Photos: React.FC = () => {
   const [photos, setPhotos] = useState<PhotoTypes[]>();
@@ -21,14 +27,21 @@ const Photos: React.FC = () => {
     fetchData();
   }, []);
 
+  if (!photos) return;
+
   return (
-    <div className="photos-container">
-      {photos?.map((photo) => (
-        <React.Fragment key={photo.id}>
-          <img src={photo.urls.regular} alt="" />
-        </React.Fragment>
+    <ImageList sx={containerStyles} cols={3} gap={50}>
+      {photos.map((photo) => (
+        <ImageListItem key={photo.id}>
+          <Box
+            component={"img"}
+            src={photo.urls.regular}
+            alt={photo.alt_description || "Unsplash Photo"}
+            sx={imageStyles}
+          />
+        </ImageListItem>
       ))}
-    </div>
+    </ImageList>
   );
 };
 
