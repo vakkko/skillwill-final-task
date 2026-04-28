@@ -7,21 +7,35 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { containerStyles, imageStyles } from "./Photos.styles";
 import type { PhotoProps } from "./Photos.types";
 
-const Photos: React.FC<PhotoProps> = ({ photos }) => {
+const Photos: React.FC<PhotoProps> = ({ photos, lastImageElementRef }) => {
   if (!photos) return;
 
   return (
     <ImageList sx={containerStyles} cols={3} gap={50}>
-      {photos.map((photo) => (
-        <ImageListItem key={photo.id}>
-          <Box
-            component={"img"}
-            src={photo.urls.regular}
-            alt={photo.alt_description || "Unsplash Photo"}
-            sx={imageStyles}
-          />
-        </ImageListItem>
-      ))}
+      {photos.map((photo, index) => {
+        if (index + 1 === photos.length) {
+          return (
+            <ImageListItem ref={lastImageElementRef} key={photo.id}>
+              <Box
+                component={"img"}
+                src={photo.urls.regular}
+                alt={photo.alt_description || "Unsplash Photo"}
+                sx={imageStyles}
+              />
+            </ImageListItem>
+          );
+        }
+        return (
+          <ImageListItem key={photo.id}>
+            <Box
+              component={"img"}
+              src={photo.urls.regular}
+              alt={photo.alt_description || "Unsplash Photo"}
+              sx={imageStyles}
+            />
+          </ImageListItem>
+        );
+      })}
     </ImageList>
   );
 };

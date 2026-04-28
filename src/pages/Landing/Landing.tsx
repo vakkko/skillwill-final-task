@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 import axios from "axios";
 
@@ -14,11 +14,23 @@ import type { PhotoTypes } from "../../components/Photos/Photos.types";
 const Landing: React.FC = () => {
   const [value, setValue] = useState<string>("");
   const [photos, setPhotos] = useState<PhotoTypes[]>([]);
+  const [page, setPage] = useState<number>(1);
+
   const [debouncedValue] = useDebounce(value, 500);
+
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastImageElementRef = useCallback((node: HTMLLIElement | null) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setPage((prev) => prev + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
-    console.log(controller);
 
     const fetchData = async () => {
       try {
@@ -31,12 +43,13 @@ const Landing: React.FC = () => {
           params: {
             client_id: "cvsc_ts30Fz40q2V-mNmF2fyFZy-0eVTVlZfjzQ6DC4",
             ...(debouncedValue && { query: debouncedValue }),
+            page,
             per_page: 20,
           },
         });
 
         const data = debouncedValue ? response.data.results : response.data;
-        setPhotos(data);
+        setPhotos((prev) => [...prev, ...data]);
       } catch (err) {
         if (axios.isCancel(err)) return;
         console.error(err);
@@ -45,12 +58,12 @@ const Landing: React.FC = () => {
 
     fetchData();
     return () => controller.abort();
-  }, [debouncedValue]);
+  }, [debouncedValue, page]);
 
   return (
     <Box component="main" sx={{ margin: "0 100px", pt: 4 }}>
       <InputField value={value} setValue={setValue} />
-      <Photos photos={photos} />
+      <Photos lastImageElementRef={lastImageElementRef} photos={photos} />
     </Box>
   );
 };
