@@ -15,7 +15,7 @@ const Landing: React.FC = () => {
   const [value, setValue] = useState<string>("");
   const [photos, setPhotos] = useState<PhotoTypes[]>([]);
   const [page, setPage] = useState<number>(1);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [debouncedValue] = useDebounce(value, 500);
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -34,6 +34,7 @@ const Landing: React.FC = () => {
 
     const fetchData = async () => {
       try {
+        setLoading(true);
         const url = debouncedValue
           ? "https://api.unsplash.com/search/photos"
           : "https://api.unsplash.com/photos";
@@ -47,7 +48,7 @@ const Landing: React.FC = () => {
             per_page: 20,
           },
         });
-
+        setLoading(false);
         const data = debouncedValue ? response.data.results : response.data;
         setPhotos((prev) => [...prev, ...data]);
       } catch (err) {
@@ -62,8 +63,18 @@ const Landing: React.FC = () => {
 
   return (
     <Box component="main" sx={{ margin: "0 100px", pt: 4 }}>
-      <InputField value={value} setValue={setValue} />
-      <Photos lastImageElementRef={lastImageElementRef} photos={photos} />
+      <InputField
+        setPhotos={setPhotos}
+        setPage={setPage}
+        setLoading={setLoading}
+        value={value}
+        setValue={setValue}
+      />
+      <Photos
+        loading={loading}
+        lastImageElementRef={lastImageElementRef}
+        photos={photos}
+      />
     </Box>
   );
 };

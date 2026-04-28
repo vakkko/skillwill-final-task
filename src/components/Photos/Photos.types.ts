@@ -24,6 +24,7 @@ export interface PhotoTypes {
 export interface PhotoProps {
   photos: PhotoTypes[] | undefined;
   lastImageElementRef: (node: HTMLLIElement) => void;
+  loading: boolean;
 }
 
 interface PhotoUrls {

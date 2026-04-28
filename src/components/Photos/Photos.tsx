@@ -6,9 +6,14 @@ import ImageListItem from "@mui/material/ImageListItem";
 
 import { containerStyles, imageStyles } from "./Photos.styles";
 import type { PhotoProps } from "./Photos.types";
+import Loading from "../Loading/Loading";
 
-const Photos: React.FC<PhotoProps> = ({ photos, lastImageElementRef }) => {
-  if (!photos) return;
+const Photos: React.FC<PhotoProps> = ({
+  photos,
+  lastImageElementRef,
+  loading,
+}) => {
+  if (!photos || loading) return <Loading />;
 
   return (
     <ImageList sx={containerStyles} cols={3} gap={50}>

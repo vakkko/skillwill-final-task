@@ -6,10 +6,19 @@ import type { InputFieldProps } from "./InputField.types";
 
 import { InputStyles } from "./InputField.styles";
 
-const InputField: React.FC<InputFieldProps> = ({ value, setValue }) => {
+const InputField: React.FC<InputFieldProps> = ({
+  value,
+  setValue,
+  setPhotos,
+  setLoading,
+  setPage,
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
+    setLoading(true);
+    setPage(1);
+    setPhotos([]);
   };
 
   return (
@@ -20,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({ value, setValue }) => {
       component={"input"}
       type="text"
       placeholder="Search"
+      name="search"
     />
   );
 };
