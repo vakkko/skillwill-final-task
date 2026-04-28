@@ -6,5 +6,6 @@ export const containerStyles: SxProps<Theme> = {
 
 export const imageStyles: SxProps<Theme> = {
   height: "350px",
+  width: "100%",
   objectFit: "cover",
 };

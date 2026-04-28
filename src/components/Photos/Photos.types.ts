@@ -21,6 +21,10 @@ export interface PhotoTypes {
   sponsorship: Sponsorship | null;
 }
 
+export interface PhotoProps {
+  photos: PhotoTypes[] | undefined;
+}
+
 interface PhotoUrls {
   raw: string;
   full: string;
