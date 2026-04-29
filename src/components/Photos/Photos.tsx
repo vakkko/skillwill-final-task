@@ -7,6 +7,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { containerStyles, imageStyles } from "./Photos.styles";
 import type { PhotoProps } from "./Photos.types";
 import Loading from "../Loading/Loading";
+import { Link } from "react-router";
 
 const Photos: React.FC<PhotoProps> = ({
   photos,
@@ -20,7 +21,26 @@ const Photos: React.FC<PhotoProps> = ({
       {photos.map((photo, index) => {
         if (index + 1 === photos.length) {
           return (
-            <ImageListItem ref={lastImageElementRef} key={photo.id}>
+            <Link
+              ref={lastImageElementRef}
+              key={photo.id}
+              style={{ cursor: "pointer" }}
+              to={photo.id}
+            >
+              <ImageListItem>
+                <Box
+                  component={"img"}
+                  src={photo.urls.regular}
+                  alt={photo.alt_description || "Unsplash Photo"}
+                  sx={imageStyles}
+                />
+              </ImageListItem>
+            </Link>
+          );
+        }
+        return (
+          <Link key={photo.id} to={photo.id}>
+            <ImageListItem>
               <Box
                 component={"img"}
                 src={photo.urls.regular}
@@ -28,17 +48,7 @@ const Photos: React.FC<PhotoProps> = ({
                 sx={imageStyles}
               />
             </ImageListItem>
-          );
-        }
-        return (
-          <ImageListItem key={photo.id}>
-            <Box
-              component={"img"}
-              src={photo.urls.regular}
-              alt={photo.alt_description || "Unsplash Photo"}
-              sx={imageStyles}
-            />
-          </ImageListItem>
+          </Link>
         );
       })}
     </ImageList>

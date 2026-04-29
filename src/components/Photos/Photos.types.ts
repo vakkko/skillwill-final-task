@@ -23,7 +23,7 @@ export interface PhotoTypes {
 
 export interface PhotoProps {
   photos: PhotoTypes[] | undefined;
-  lastImageElementRef: (node: HTMLLIElement) => void;
+  lastImageElementRef: (node: HTMLAnchorElement) => void;
   loading: boolean;
 }
 
