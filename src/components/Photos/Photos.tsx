@@ -31,7 +31,7 @@ const Photos: React.FC<PhotoProps> = ({
                 <Box
                   component={"img"}
                   src={photo.urls.regular}
-                  alt={photo.alt_description || "Unsplash Photo"}
+                  alt={photo.alt_description}
                   sx={imageStyles}
                 />
               </ImageListItem>
