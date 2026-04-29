@@ -6,6 +6,7 @@ import type { PhotoDetailsProps } from "./PhotoDetails.types";
 import { PhotoDetailsStyles } from "./PhotoDetails.styles";
 import UserAvatarAndName from "./UserAvatarAndName/UserAvatarAndName";
 import PhotoStats from "./PhotoStats/PhotoStats";
+import InfoBox from "./InfoBox/InfoBox";
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({
   profile_image,
@@ -37,10 +38,9 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({
           Download
         </Box>
       </Box>
-
       <Box component={"hr"} style={PhotoDetailsStyles.divider} />
-
       <PhotoStats height={height} likes={likes} width={width} />
+      <InfoBox asset_type={asset_type} created_at={created_at} />
     </Box>
   );
 };
