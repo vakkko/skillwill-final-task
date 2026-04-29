@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import type { PhotoDetailsProps } from "./PhotoDetails.types";
 import { PhotoDetailsStyles } from "./PhotoDetails.styles";
 import UserAvatarAndName from "./UserAvatarAndName/UserAvatarAndName";
+import PhotoStats from "./PhotoStats/PhotoStats";
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({
   profile_image,
@@ -38,6 +39,8 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({
       </Box>
 
       <Box component={"hr"} style={PhotoDetailsStyles.divider} />
+
+      <PhotoStats height={height} likes={likes} width={width} />
     </Box>
   );
 };
