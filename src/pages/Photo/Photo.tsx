@@ -14,6 +14,8 @@ import type { PhotoTypes } from "../../components/Photos/Photos.types";
 
 import { PhotoStyles } from "./Photo.styles";
 
+const photoCache: Record<string, PhotoTypes> = {};
+
 const Photo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [photoData, setPhotoData] = useState<PhotoTypes | null>(null);
@@ -21,12 +23,18 @@ const Photo: React.FC = () => {
 
   useEffect(() => {
     const fetchPhotoData = async () => {
+      if (!id) return;
+      if (photoCache[id]) {
+        setPhotoData(photoCache[id]);
+        return;
+      }
       try {
         setLoading(true);
         const response = await axios.get(
           `https://api.unsplash.com/photos/${id}/?client_id=cvsc_ts30Fz40q2V-mNmF2fyFZy-0eVTVlZfjzQ6DC4`,
         );
         setLoading(false);
+        photoCache[id] = response.data;
         setPhotoData(response.data);
       } catch (e) {
         console.error(e);
@@ -64,9 +72,9 @@ const Photo: React.FC = () => {
           <path
             d="M15 18L9 12L15 6"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         Back
