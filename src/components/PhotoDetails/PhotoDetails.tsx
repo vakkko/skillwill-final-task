@@ -18,7 +18,6 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({
   height,
   created_at,
   asset_type,
-  alternative_slugs,
 }) => {
   return (
     <Box component={"aside"}>

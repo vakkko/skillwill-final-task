@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import axios from "axios";
 
@@ -38,6 +38,12 @@ const Photo: React.FC = () => {
     if (id) fetchPhotoData();
   }, [id]);
 
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   if (!photoData || loading)
     return (
       <Box sx={PhotoStyles.center}>
@@ -47,6 +53,24 @@ const Photo: React.FC = () => {
 
   return (
     <Box component={"main"} sx={PhotoStyles.container}>
+      <Box component={"a"} sx={PhotoStyles.back} onClick={handleBackClick}>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Back
+      </Box>
       <Box style={PhotoStyles.layout}>
         <PhotoAndDescription
           alt_description={photoData.alt_description}
@@ -57,7 +81,6 @@ const Photo: React.FC = () => {
         <PhotoDetails
           width={photoData.width}
           height={photoData.height}
-          alternative_slugs={photoData.alternative_slugs}
           asset_type={photoData.asset_type}
           created_at={photoData.created_at}
           download={photoData.links.download}

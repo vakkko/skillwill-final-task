@@ -8,5 +8,4 @@ export interface PhotoDetailsProps {
   height: number;
   created_at: string;
   asset_type: string;
-  alternative_slugs: Record<string, string>;
 }
