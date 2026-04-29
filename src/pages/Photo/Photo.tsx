@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 
 import PhotoAndDescription from "../../components/PhotoAndDescription/PhotoAndDescription";
 import Loading from "../../components/Loading/Loading";
+import PhotoDetails from "../../components/PhotoDetails/PhotoDetails";
 
 import type { PhotoTypes } from "../../components/Photos/Photos.types";
 
@@ -52,6 +53,18 @@ const Photo: React.FC = () => {
           color={photoData.color}
           description={photoData.description}
           regular={photoData.urls.regular}
+        />
+        <PhotoDetails
+          width={photoData.width}
+          height={photoData.height}
+          alternative_slugs={photoData.alternative_slugs}
+          asset_type={photoData.asset_type}
+          created_at={photoData.created_at}
+          download={photoData.links.download}
+          likes={photoData.likes}
+          profile_image={photoData.user.profile_image?.medium}
+          user_name={photoData.user.name}
+          username={photoData.user.username}
         />
       </Box>
     </Box>
